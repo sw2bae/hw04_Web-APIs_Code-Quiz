@@ -3,47 +3,57 @@ var questionsArray = [
     
     choice : ["1","2","3","4","5"],
 
-    answer : "1"
+    answer : 0
     },
     { quesiton : "question 2",
     
     choice : ["1","2","3","4","5"],
 
-    answer : "2"
+    answer : 1
     },
     { quesiton : "question 3",
     
     choice : ["1","2","3","4","5"],
 
-    answer : "3"
+    answer : 2
     },
     { quesiton : "question 4",
     
     choice : ["1","2","3","4","5"],
 
-    answer : "4"
+    answer : 3
     },
     { quesiton : "question 5",
     
     choice : ["1","2","3","4","5"],
 
-    answer : "5"
+    answer : 4
     }
 ]; 
 
-var scoreEl = $("#score");
+var scoreBtn = $("#score");
 var timeEl = $("#time");
-var quesitonEl = $("question");
-var multipleChoiceEl = $("multipleChoice");
+var quesitonEl = $("#question");
+var multipleChoiceEl = $("#multipleChoice");
+var startBtn = $("#start");
+
 
 var timeLeft = questionsArray.length * 20;
+
+var questionNum = 0;
+var quesitonAsk = questionsArray[questionNum];
 
 
 
 function startQuize(){
+    startBtn.click(function(){
+        startBtn.addClass("d-none");
+        timeFunction();
+        quesitonFunction();
 
-
+    });
 }
+
 
 
 function timeFunction(){
@@ -55,12 +65,34 @@ var timer = setInterval(function() {
       timeEl.text("Time Over");
     
       clearInterval(timer);
+      
     }
-
   }, 1000);
 }
 
+function quesitonFunction(){
+        
+        quesitonEl.text(quesitonAsk.quesiton);
+        
+        $.each(quesitonAsk.choice, function(index,choiceNum){
+            var choiceBtn = $("<button>");
+        choiceBtn
+            .addClass("letter-button letter letter-button-color row mt-1")
+            .attr("btn-id",index)
+            .text(choiceNum)
+            .appendTo(multipleChoiceEl);
+        });
+}
 
+function answerCheckFunction(){
+
+
+
+}
+
+
+
+startQuize();
 
 
 
