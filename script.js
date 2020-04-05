@@ -115,13 +115,35 @@ function quesitonFunction() {
         quesitonAsk = questionsArray[questionNum];
         userInputEl.empty();
 
-        addQuestion();
 
-        });
+        if (questionNum < questionsArray.length){
+        quesitonFunction();
+        } else{
+            
+            $(".display-4").text("GAME OVER");
+            $("#question").text("YOUR SCORE IS : " + timeLeft);
+            answerCheckEl.empty();
+            
 
+            var userNameInput = $("<input>");
+                userNameInput
+                    .addClass("form-control")
+                    .attr("id","input-name")
+                    .attr("placeholder","Name")
+                    .appendTo(answerCheckEl);
 
-
+            var submitBtn = $("<button>");
+                submitBtn
+                    .addClass("btn btn-primary mt-5")
+                    .attr("id","submit-Btn")
+                    .text("Submit")
+                    .appendTo(answerCheckEl);
+            }
+                    
+        
+    });
 }
+
 
 
 
