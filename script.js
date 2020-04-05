@@ -1,42 +1,48 @@
 var questionsArray = [
-    { quesiton : "question 1",
-    
-    choice : ["1","2","3","4","5"],
+    {
+        quesiton: "question 1",
 
-    answer : 0
+        choice: ["1", "2", "3", "4", "5"],
+
+        answer: 0
     },
-    { quesiton : "question 2",
-    
-    choice : ["1","2","3","4","5"],
+    {
+        quesiton: "question 2",
 
-    answer : 1
+        choice: ["A", "B", "C", "D", "E"],
+
+        answer: 1
     },
-    { quesiton : "question 3",
-    
-    choice : ["1","2","3","4","5"],
+    {
+        quesiton: "question 3",
 
-    answer : 2
+        choice: ["1", "2", "3", "4", "5"],
+
+        answer: 2
     },
-    { quesiton : "question 4",
-    
-    choice : ["1","2","3","4","5"],
+    {
+        quesiton: "question 4",
 
-    answer : 3
+        choice: ["1", "2", "3", "4", "5"],
+
+        answer: 3
     },
-    { quesiton : "question 5",
-    
-    choice : ["1","2","3","4","5"],
+    {
+        quesiton: "question 5",
 
-    answer : 4
+        choice: ["1", "2", "3", "4", "5"],
+
+        answer: 4
     }
-]; 
+];
 
 var scoreBtn = $("#score");
 var timeEl = $("#time");
 var quesitonEl = $("#question");
 var multipleChoiceEl = $("#multipleChoice");
 var startBtn = $("#start");
-
+var userInputEl = $("#userInput");
+var answerCheckEl = $("#check"); 
 
 var timeLeft = questionsArray.length * 20;
 
@@ -45,58 +51,86 @@ var quesitonAsk = questionsArray[questionNum];
 
 
 
-function startQuize(){
-    startBtn.click(function(){
-        startBtn.addClass("d-none");
-        timeFunction();
-        quesitonFunction();
 
-    });
+startBtn.click(function () {
+    startBtn.addClass("d-none");
+    timeFunction();
+
+    quesitonFunction();
+
+});
+
+
+
+
+
+
+function timeFunction() {
+    var timer = setInterval(function () {
+        timeEl.text("Time : " + timeLeft + " seconds remaining");
+        timeLeft--;
+
+        if (timeLeft === 0) {
+            timeEl.text("Time Over");
+
+            clearInterval(timer);
+
+        }
+    }, 1000);
 }
 
-
-
-function timeFunction(){
-var timer = setInterval(function() {
-    timeEl.text("Time : "+ timeLeft +" seconds remaining");
-    timeLeft--;
-
-    if (timeLeft === 0) {
-      timeEl.text("Time Over");
+function quesitonFunction() {
     
-      clearInterval(timer);
-      
-    }
-  }, 1000);
-}
+    function addQuestion(){
 
-function quesitonFunction(){
-        
-        quesitonEl.text(quesitonAsk.quesiton);
-        
-        $.each(quesitonAsk.choice, function(index,choiceNum){
+        $.each(quesitonAsk.choice, function (index, choiceNum) {
+            quesitonEl.text(quesitonAsk.quesiton);
             var choiceBtn = $("<button>");
-        choiceBtn
-            .addClass("letter-button letter letter-button-color row mt-1")
-            .attr("btn-id",index)
-            .text(choiceNum)
-            .appendTo(multipleChoiceEl);
+    
+            choiceBtn
+                .addClass("letter-button letter letter-button-color row mt-1 user-input")
+                .attr("value", index)
+                .text(choiceNum)
+                .appendTo(userInputEl);
         });
+    }
+  
+    addQuestion();
+
+    $(".user-input").click(function () {
+
+        event.stopPropagation();
+
+        var userInput = ($(this).val());
+
+
+        if (userInput != quesitonAsk.answer) {
+            timeLeft=timeLeft-20;
+            answerCheckEl.text("WRONG!");
+        }else{
+            answerCheckEl.text("CORRECT!");
+        }
+
+        questionNum++;
+        quesitonAsk = questionsArray[questionNum];
+        userInputEl.empty();
+
+        addQuestion();
+
+        });
+
+
+
 }
 
-function answerCheckFunction(){
 
 
 
-}
 
 
 
-startQuize();
 
-
-
-{/* <div class="container">
+/* <div class="container">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" id = "score" href="#">Score</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
@@ -122,4 +156,4 @@ startQuize();
     <a class="btn btn-primary btn-lg" id = "start" href="#" role="button">Start</a>
 </div>
 
-</div> */}
+</div> */
