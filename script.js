@@ -42,7 +42,7 @@ var quesitonEl = $("#question");
 var multipleChoiceEl = $("#multipleChoice");
 var startBtn = $("#start");
 var userInputEl = $("#userInput");
-var answerCheckEl = $("#check"); 
+var answerCheckEl = $("#check");
 
 var timeLeft = questionsArray.length * 20;
 
@@ -53,6 +53,7 @@ var quesitonAsk = questionsArray[questionNum];
 
 
 startBtn.click(function () {
+    questionsArray;
     startBtn.addClass("d-none");
     timeFunction();
 
@@ -62,7 +63,13 @@ startBtn.click(function () {
 
 
 
+scoreBtn.click(function(){
 
+
+
+
+    
+});
 
 
 function timeFunction() {
@@ -70,7 +77,7 @@ function timeFunction() {
         timeEl.text("Time : " + timeLeft + " seconds remaining");
         timeLeft--;
 
-        if (timeLeft === 0) {
+        if (timeLeft === 0 || questionNum == questionsArray.length) {
             timeEl.text("Time Over");
 
             clearInterval(timer);
@@ -80,13 +87,13 @@ function timeFunction() {
 }
 
 function quesitonFunction() {
-    
-    function addQuestion(){
+
+    function addQuestion() {
 
         $.each(quesitonAsk.choice, function (index, choiceNum) {
             quesitonEl.text(quesitonAsk.quesiton);
             var choiceBtn = $("<button>");
-    
+
             choiceBtn
                 .addClass("letter-button letter letter-button-color row mt-1 user-input")
                 .attr("value", index)
@@ -94,7 +101,7 @@ function quesitonFunction() {
                 .appendTo(userInputEl);
         });
     }
-  
+
     addQuestion();
 
     $(".user-input").click(function () {
@@ -105,9 +112,9 @@ function quesitonFunction() {
 
 
         if (userInput != quesitonAsk.answer) {
-            timeLeft=timeLeft-20;
+            timeLeft = timeLeft - 20;
             answerCheckEl.text("WRONG!");
-        }else{
+        } else {
             answerCheckEl.text("CORRECT!");
         }
 
@@ -116,49 +123,76 @@ function quesitonFunction() {
         userInputEl.empty();
 
 
-        if (questionNum < questionsArray.length){
-        quesitonFunction();
-        } else{
-            
+        if (questionNum < questionsArray.length) {
+            quesitonFunction();
+        } else {
+
             $(".display-4").text("GAME OVER");
             $("#question").text("YOUR SCORE IS : " + timeLeft);
             answerCheckEl.empty();
-            
+
 
             var userNameInput = $("<input>");
-                userNameInput
-                    .addClass("form-control")
-                    .attr("id","input-name")
-                    .attr("placeholder","Name")
-                    .appendTo(answerCheckEl);
+            userNameInput
+                .addClass("form-control")
+                .attr("id", "input-name")
+                .attr("placeholder", "Name")
+                .appendTo(answerCheckEl);
 
             var submitBtn = $("<button>");
-                submitBtn
-                    .addClass("btn btn-primary mt-5")
-                    .attr("id","submit-Btn")
-                    .text("Submit")
-                    .appendTo(answerCheckEl);
-            }
-                    
-        
+            submitBtn
+                .addClass("btn btn-primary mt-5")
+                .attr("id", "submit-Btn")
+                .text("Submit")
+                .appendTo(answerCheckEl);
+        }
+        $("#submit-Btn").click(function() {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var userName = userNameInput.val();
+
+            var finalScore = parseInt(timeLeft)+1;
+
+            localStorage.getItem(userName);
+           
+            localStorage.setItem(userName, finalScore);
+         
+
+            answerCheckEl.empty();
+            
+            var scoreHistory = $("<div>");
+            scoreHistory
+                .addClass()
+                .attr("id","score-history")
+                .text("Name : " + userName + " || Score : " + (finalScore))
+                .prependTo(answerCheckEl);
+
+            var reStartBtn = $("<button>");
+
+            reStartBtn
+                .addClass("btn btn-primary mt-5")
+                .attr("id", "restart-Btn")
+                .text("Restart")
+                .appendTo(answerCheckEl);
+
+            $("#check").click(function() {
+                event.preventDefault();
+                location.reload();
+
+            });
+
+           
+        });
+
     });
 }
 
 
 
-
-
-
-
-
-
-/* <div class="container">
+{/* <div class="container">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" id = "score" href="#">Score</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <button class="navbar-brand" id = "score" href="#">Score</button>
     <div class="navbar navbar-expand-lg navbar-light bg-light" id="navbarText">
         <span class="navbar-text" id = "time">
             Time :
@@ -169,13 +203,15 @@ function quesitonFunction() {
 <div class="jumbotron">
     <h1 class="display-4">Quiz</h1>
     <p class="lead" id="question">
-        <!--  -->
+       
     </p>
     <hr class="my-4">
     <div id = "multipleChoice">
-        <!--  -->
+        <div id = "userInput">
+            
+        </div>
+        <div id = "check">
+        </div>
     </div>
     <a class="btn btn-primary btn-lg" id = "start" href="#" role="button">Start</a>
-</div>
-
-</div> */
+</div> */}
