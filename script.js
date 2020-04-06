@@ -55,6 +55,7 @@ var quesitonAsk = questionsArray[questionNum];
 startBtn.click(function () {
     questionsArray;
     startBtn.addClass("d-none");
+    scoreBtn.addClass("d-none");
     timeFunction();
 
     quesitonFunction();
@@ -65,10 +66,51 @@ startBtn.click(function () {
 
 scoreBtn.click(function(){
 
+    $(".display-4").text("Score");
+
+  
+
+    startBtn.addClass("d-none");
+    scoreBtn.addClass("d-none");
 
 
+    var backBtn = $("<button>");
+    backBtn
+        .addClass("btn btn-primary mt-5 mr-5")
+        .attr("id","backBtn")
+        .text("Back")
+        .appendTo(multipleChoiceEl);
+
+
+    var clearBtn = $("<button>");
+        clearBtn
+            .addClass("btn btn-primary mt-5")
+            .attr("id","clearBtn")
+            .text("Clear")
+            .appendTo(multipleChoiceEl);
 
     
+        var scoreNote = JSON.stringify(localStorage);
+        console.log(scoreNote);
+    // for (var i = 0; i < localStorage.length;i++){
+    //     $("#question").text(localStorage.key());
+    //     }
+
+
+    $("#backBtn").click(function(){
+        event.preventDefault();
+        location.reload();
+    });
+    
+    $("#clearBtn").click(function(){
+        event.preventDefault();
+        localStorage.clear();
+        $("#question").empty();
+
+    });
+
+
+
 });
 
 
@@ -92,6 +134,7 @@ function quesitonFunction() {
 
         $.each(quesitonAsk.choice, function (index, choiceNum) {
             quesitonEl.text(quesitonAsk.quesiton);
+            
             var choiceBtn = $("<button>");
 
             choiceBtn
@@ -99,6 +142,9 @@ function quesitonFunction() {
                 .attr("value", index)
                 .text(choiceNum)
                 .appendTo(userInputEl);
+
+            
+
         });
     }
 
@@ -157,7 +203,6 @@ function quesitonFunction() {
             localStorage.getItem(userName);
            
             localStorage.setItem(userName, finalScore);
-         
 
             answerCheckEl.empty();
             
