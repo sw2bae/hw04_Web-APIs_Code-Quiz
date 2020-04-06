@@ -1,38 +1,38 @@
 var questionsArray = [
     {
-        quesiton: "question 1",
+        quesiton: "Tequila, grenadine and orange juice make up what drink?",
 
-        choice: ["1", "2", "3", "4", "5"],
+        choice: ["A. Orange Spike", "B. Sweet Jose", "C. Orange Margarita", "D. Tequila Sunset", "E. Tequila Sunrise"],
 
-        answer: 0
+        answer: 4
     },
     {
-        quesiton: "question 2",
+        quesiton: "What cocktail is made from Kahlua, vodka, and cream?",
 
-        choice: ["A", "B", "C", "D", "E"],
-
-        answer: 1
-    },
-    {
-        quesiton: "question 3",
-
-        choice: ["1", "2", "3", "4", "5"],
-
-        answer: 2
-    },
-    {
-        quesiton: "question 4",
-
-        choice: ["1", "2", "3", "4", "5"],
+        choice: ["A. Root Beer Float", "B. Kahlua And Cream", "C. Black Russian", "D. White Russian", "E. Cookie And Cream"],
 
         answer: 3
     },
     {
-        quesiton: "question 5",
+        quesiton: "What is 1 shot of cinnamon schnapps and followed by 1 shot of peppermint schnapps called?",
 
-        choice: ["1", "2", "3", "4", "5"],
+        choice: ["A. Sex On The Beach", "B. Fire And Ice", "C. Sweet And Sour", "D. Hot And Spicy", "E. Grasshopper"],
 
-        answer: 4
+        answer: 2
+    },
+    {
+        quesiton: "What cocktail mixes 2 oz. bourbon with 2 tbsp. lemon juice and 2 tsp. sugar syrup?",
+
+        choice: ["A. Bourbon Sour", "B. Bourbon Punch", "C. Pedro Bourbon", "D. Bourbonville", "E. Bourbon Whiskey"],
+
+        answer: 0
+    },
+    {
+        quesiton: "A Black Russian is made with vodka and what?",
+
+        choice: ["A. Black Label", "B. Kahlua", "C. Creme De Cacao", "D. Coffee De Mint", "E. Creme De Coffee "],
+
+        answer: 2
     }
 ];
 
@@ -90,11 +90,18 @@ scoreBtn.click(function(){
             .appendTo(multipleChoiceEl);
 
     
-        var scoreNote = JSON.stringify(localStorage);
-        console.log(scoreNote);
-    // for (var i = 0; i < localStorage.length;i++){
-    //     $("#question").text(localStorage.key());
-    //     }
+        var nameKey = Object.keys(localStorage);
+        var scoreValue = Object.values(localStorage);
+        console.log(nameKey);
+        console.log(scoreValue);
+
+        for (var i = 0; i < localStorage.length; i++){
+            var history = $("<div>");
+            history
+                .attr("id","userHistory")
+                .text(nameKey[i] + " : " + scoreValue[i])
+                .prependTo($("#question"));
+        }
 
 
     $("#backBtn").click(function(){
@@ -199,8 +206,6 @@ function quesitonFunction() {
             var userName = userNameInput.val();
 
             var finalScore = parseInt(timeLeft)+1;
-
-            localStorage.getItem(userName);
            
             localStorage.setItem(userName, finalScore);
 
@@ -233,30 +238,3 @@ function quesitonFunction() {
     });
 }
 
-
-
-{/* <div class="container">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-brand" id = "score" href="#">Score</button>
-    <div class="navbar navbar-expand-lg navbar-light bg-light" id="navbarText">
-        <span class="navbar-text" id = "time">
-            Time :
-        </span>
-    </div>
-</nav>
-
-<div class="jumbotron">
-    <h1 class="display-4">Quiz</h1>
-    <p class="lead" id="question">
-       
-    </p>
-    <hr class="my-4">
-    <div id = "multipleChoice">
-        <div id = "userInput">
-            
-        </div>
-        <div id = "check">
-        </div>
-    </div>
-    <a class="btn btn-primary btn-lg" id = "start" href="#" role="button">Start</a>
-</div> */}
